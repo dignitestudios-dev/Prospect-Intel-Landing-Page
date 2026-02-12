@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const Hero = () => {
@@ -6,7 +7,7 @@ const Hero = () => {
     <div className="relative w-full bg-[#000E16] overflow-hidden" id="home">
       {/* Hero Background Section */}
       <div
-        className="relative w-full flex flex-col lg:flex-row justify-between items-center pt-24 lg:pt-25 px-4 sm:px-8 lg:pl-25 gap-6 lg:gap-2.5 min-h-screen lg:min-h-auto"
+        className="relative w-full flex flex-col xl:flex-row justify-between items-center pt-24 lg:pt-25 px-4 sm:px-8 lg:pl-25 gap-6 lg:gap-2.5 lg:min-h-auto"
         style={{
           backgroundImage: "url(/images/bg.webp)",
           backgroundSize: "cover",
@@ -18,7 +19,7 @@ const Hero = () => {
         <div className="absolute inset-0 bg-black/80 z-0"></div>
 
         {/* Left Content Section */}
-        <div className="relative z-10 flex flex-col gap-6 max-w-2xl lg:w-auto">
+        <div className="relative z-10 flex flex-col gap-6 max-w-2xl lg:w-auto xl:pb-10">
           {/* "BEYOND THE FILM" Text */}
           <div className="flex flex-col gap-3">
             <h2
@@ -39,7 +40,7 @@ const Hero = () => {
           </div>
 
           {/* Main Heading */}
-          <h1 className="font-bebas text-[32px] sm:text-[48px] lg:text-[74px] leading-[30px] sm:leading-[48px] lg:leading-[66px] text-white font-normal tracking-tight max-w-2xl">
+          <h1 className="font-bebas text-[48px] lg:text-[74px] leading-[48px] lg:leading-[66px] text-white font-normal tracking-tight max-w-2xl">
             COMPLETE PROSPECT INSIGHTS.{" "}
             <span className="text-primary">SMART RECRUITING</span> STARTS HERE.
           </h1>
@@ -74,11 +75,13 @@ const Hero = () => {
             </button>
 
             {/* Schedule a Demo Button */}
-            <button className="flex flex-row justify-center items-center px-[10px] py-[10px] gap-[10px] h-[44px] bg-primary rounded-lg hover:opacity-90 transition">
-              <span className="text-[16px] font-jost font-medium text-white text-center">
-                Schedule a Demo
-              </span>
-            </button>
+            <Link href="/#demo">
+              <button className="flex flex-row justify-center items-center px-[10px] py-[10px] gap-[10px] h-[44px] bg-primary rounded-lg hover:opacity-90 transition">
+                <span className="text-[16px] font-jost font-medium text-white text-center">
+                  Schedule a Demo
+                </span>
+              </button>
+            </Link>
           </div>
         </div>
 

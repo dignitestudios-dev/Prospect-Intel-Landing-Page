@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import React, { useState, useEffect } from "react";
 
 const Navbar = () => {
@@ -9,8 +10,10 @@ const Navbar = () => {
   const [activeLink, setActiveLink] = useState("#home");
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -56,7 +59,9 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 w-full z-50 transition-colors duration-300 ${isScrolled ? "bg-[#000a10b8] backdrop-blur-sm" : "bg-transparent"}`}
+      className={`fixed top-0 w-full z-50 transition-all duration-300 backdrop-blur-sm ${
+        isScrolled ? "bg-[#000a10e6]" : "bg-[#000a1066]"
+      }`}
     >
       <div className="flex flex-row items-center justify-between px-6 sm:px-8 md:px-16 lg:px-25 py-4">
         <div className="flex gap-1 items-center">
@@ -128,7 +133,7 @@ const Navbar = () => {
           />
 
           <aside
-            className={`fixed top-0 right-0 h-full w-[280px] sm:w-[340px] bg-[#001522] transform transition-transform duration-300 ease-in-out ${menuOpen ? "translate-x-0" : "translate-x-full"}`}
+            className={`fixed top-0 right-0 h-screen w-[280px] sm:w-[340px] bg-[#001522] transform transition-transform duration-300 ease-in-out ${menuOpen ? "translate-x-0" : "translate-x-full"}`}
           >
             <div className="flex items-center justify-between px-4 py-4 border-b border-white/10">
               <div className="flex items-center gap-3">
@@ -180,9 +185,11 @@ const Navbar = () => {
               ))}
 
               <div className="mt-4">
-                <button className="w-full py-3 bg-primary rounded-lg text-white">
-                  Schedule a Demo
-                </button>
+                <Link href="/#demo">
+                  <button className="w-full py-3 bg-primary rounded-lg text-white">
+                    Schedule a Demo
+                  </button>
+                </Link>
               </div>
             </nav>
           </aside>

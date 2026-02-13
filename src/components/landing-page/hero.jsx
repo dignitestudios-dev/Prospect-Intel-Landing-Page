@@ -19,7 +19,7 @@ const Hero = () => {
         <div className="absolute inset-0 bg-black/80 z-0"></div>
 
         {/* Left Content Section */}
-        <div className="relative z-10 flex flex-col gap-6 max-w-2xl lg:w-auto xl:pb-10">
+        <div className="relative z-10 flex flex-col gap-6 max-w-180 lg:w-auto xl:pb-10">
           {/* "BEYOND THE FILM" Text */}
           <div className="flex flex-col gap-3">
             <h2
@@ -40,7 +40,7 @@ const Hero = () => {
           </div>
 
           {/* Main Heading */}
-          <h1 className="font-bebas text-[48px] lg:text-[74px] leading-[48px] lg:leading-[66px] text-white font-normal tracking-tight max-w-2xl">
+          <h1 className="font-bebas text-[48px] lg:text-[74px] leading-[48px] lg:leading-[66px] text-white font-normal tracking-tight">
             COMPLETE PROSPECT INSIGHTS.{" "}
             <span className="text-primary">SMART RECRUITING</span> STARTS HERE.
           </h1>
@@ -87,7 +87,7 @@ const Hero = () => {
 
         {/* Right Image Section - Hidden on mobile, shown on lg screens */}
         <div className="relative z-20 shrink-0 mr-12">
-          <div className="relative w-156.5 h-110 lg:h-130.5">
+          <div className="relative w-156.5 h-130 lg:h-130.5">
             {/* Blur Circle Background */}
             <div
               className="absolute w-96.75 h-96.75 rounded-full blur-[123px]"
@@ -107,8 +107,7 @@ const Hero = () => {
               height={1000}
               style={{
                 mixBlendMode: "luminosity",
-                width: "559px",
-                height: "422px",
+                width: "1000px",
                 left: "67px",
                 bottom: "0",
               }}

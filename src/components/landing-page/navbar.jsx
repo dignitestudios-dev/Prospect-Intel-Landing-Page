@@ -64,36 +64,38 @@ const Navbar = () => {
       }`}
     >
       <div className="flex flex-row items-center justify-between px-6 sm:px-8 md:px-16 lg:px-25 py-4">
-        <div className="flex gap-1 items-center">
-          <Image
-            src="/images/logo.webp"
-            alt="Logo"
-            width={60}
-            height={60}
-            className="w-full h-full object-cover"
-          />
-          <div className="hidden sm:flex flex-col">
-            <div className="text-2xl font-bold text-white -mb-2.5">
-              PROSPECT
+        <div className="flex gap-10">
+          <div className="flex gap-1 items-center">
+            <Image
+              src="/images/logo.webp"
+              alt="Logo"
+              width={60}
+              height={60}
+              className="w-full h-full object-cover"
+            />
+            <div className="hidden sm:flex flex-col">
+              <div className="text-2xl font-bold text-white -mb-2.5">
+                PROSPECT
+              </div>
+              <div className="text-2xl text-primary">INTEL</div>
             </div>
-            <div className="text-2xl text-primary">INTEL</div>
           </div>
-        </div>
 
-        <div className="hidden lg:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={(e) => handleNavClick(e, link.href)}
-              className={`text-[20px] text-white font-bebas transition ${
-                activeLink === link.href &&
-                "underline underline-offset-[6px] decoration-primary decoration-2"
-              }`}
-            >
-              {link.label}
-            </a>
-          ))}
+          <div className="hidden lg:flex items-center gap-8">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
+                className={`text-[20px] text-white font-bebas transition ${
+                  activeLink === link.href &&
+                  "underline underline-offset-[6px] decoration-primary decoration-2"
+                }`}
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
         </div>
 
         <div className="flex items-center gap-3">

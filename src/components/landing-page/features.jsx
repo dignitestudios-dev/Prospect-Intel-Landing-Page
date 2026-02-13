@@ -98,7 +98,7 @@ const Features = () => {
               return (
                 <div
                   key={index}
-                  className="flex flex-col items-center gap-[14px] p-[30px] bg-[#001522] rounded-lg shadow-lg border border-primary/30 min-h-[340px] justify-between"
+                  className="flex flex-col items-center gap-[14px] p-[20px] pt-12 bg-[#001522] rounded-lg shadow-lg border border-primary/30"
                   style={{
                     boxShadow: "0px 0px 27.4px rgba(0, 133, 202, 0.5)",
                   }}
@@ -119,7 +119,7 @@ const Features = () => {
         </div>
 
         {/* Bottom CTA Text */}
-        <p className="font-jost text-[24px] font-bold leading-[35px] text-white text-center uppercase max-w-[975px] mt-8">
+        <p className="font-jost text-[24px] font-bold leading-[35px] text-white text-center uppercase max-w-[975px]">
           OUR PLATFORM IS BUILT FOR PROGRAMS THAT WANT TO RECRUIT SMARTER, MOVE
           FASTER, AND MAKE MORE CONFIDENT DECISIONS.
         </p>

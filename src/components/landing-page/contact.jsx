@@ -65,7 +65,7 @@ const Contact = () => {
                   <Message />
                   <div>
                     <p className="font-jost text-[14px] font-medium leading-5.75 text-white">
-                      info@example.com
+                      info@prospectintel.com
                     </p>
                   </div>
                 </div>

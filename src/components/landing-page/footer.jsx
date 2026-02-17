@@ -110,7 +110,7 @@ const Footer = () => {
               We're always happy to help.
             </h3>
             <p className="font-axiforma text-[13px] leading-5.25 text-white">
-              info@example.com
+              info@prospectintel.com
             </p>
           </div>
         </div>

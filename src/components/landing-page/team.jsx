@@ -81,6 +81,10 @@ const Team = () => {
                   {member.name}
                 </h3>
 
+                <p className="font-jost text-[16px] leading-6.25 text-gray-400 text-center uppercase mb-4">
+                  Co-Founder
+                </p>
+
                 {/* Description */}
                 <p className="font-jost text-[16px] leading-6.25 text-white text-center whitespace-pre-wrap flex-1">
                   {member.description}

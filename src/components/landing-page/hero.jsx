@@ -100,7 +100,7 @@ const Hero = () => {
 
             {/* Hero Image */}
             <Image
-              src="/images/hero.webp"
+              src="/images/hero.png"
               alt="NFL Players"
               className="absolute -bottom-12 w-full h-full object-cover"
               width={1000}

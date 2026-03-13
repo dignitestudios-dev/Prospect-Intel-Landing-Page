@@ -2,26 +2,189 @@
 import React, { useState } from "react";
 import Message from "../icons/message";
 
+const INITIAL_FORM_DATA = {
+  name: "",
+  email: "",
+  phone: "",
+  message: "",
+};
+
+const INITIAL_ERRORS = {
+  name: "",
+  email: "",
+  phone: "",
+  message: "",
+};
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const formatPhoneNumber = (value) => {
+  const digits = value.replace(/\D/g, "").slice(0, 10);
+
+  if (!digits) {
+    return "";
+  }
+
+  if (digits.length < 4) {
+    return `+1 (${digits}`;
+  }
+
+  if (digits.length < 7) {
+    return `+1 (${digits.slice(0, 3)}) ${digits.slice(3)}`;
+  }
+
+  return `+1 (${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(
+    6
+  )}`;
+};
+
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
+  const [formData, setFormData] = useState(INITIAL_FORM_DATA);
+  const [errors, setErrors] = useState(INITIAL_ERRORS);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitFeedback, setSubmitFeedback] = useState({
+    type: "",
     message: "",
   });
 
+  const validateField = (name, value) => {
+    const trimmedValue = value.trim();
+
+    switch (name) {
+      case "name":
+        if (!trimmedValue) {
+          return "Name is required.";
+        }
+        if (trimmedValue.length < 2) {
+          return "Name must be at least 2 characters.";
+        }
+        return "";
+
+      case "email":
+        if (!trimmedValue) {
+          return "Email is required.";
+        }
+        if (!EMAIL_REGEX.test(trimmedValue)) {
+          return "Please enter a valid email address.";
+        }
+        return "";
+
+      case "phone": {
+        if (!trimmedValue) {
+          return "Phone number is required.";
+        }
+        const digitsOnly = trimmedValue.replace(/\D/g, "");
+        if (digitsOnly.length !== 10) {
+          return "Phone number must be 10 digits in +1 format.";
+        }
+        return "";
+      }
+
+      case "message":
+        if (!trimmedValue) {
+          return "Message is required.";
+        }
+        if (trimmedValue.length < 10) {
+          return "Message must be at least 10 characters.";
+        }
+        return "";
+
+      default:
+        return "";
+    }
+  };
+
+  const validateForm = () => {
+    const nextErrors = {
+      name: validateField("name", formData.name),
+      email: validateField("email", formData.email),
+      phone: validateField("phone", formData.phone),
+      message: validateField("message", formData.message),
+    };
+
+    setErrors(nextErrors);
+
+    return !Object.values(nextErrors).some(Boolean);
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
+    const nextValue =
+      name === "phone" ? formatPhoneNumber(value) : value;
+
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: nextValue,
+    }));
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: "",
+    }));
+
+    setSubmitFeedback({ type: "", message: "" });
+  };
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    const fieldError = validateField(name, value);
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: fieldError,
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    // Add your form submission logic here
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitFeedback({ type: "", message: "" });
+
+    try {
+      const response = await fetch(
+        "https://dev.api.prospectintelhq.com/api/contact",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: formData.name.trim(),
+            email: formData.email.trim(),
+            phone: formData.phone.trim(),
+            message: formData.message.trim(),
+          }),
+        }
+      );
+
+      const payload = await response
+        .json()
+        .catch(() => ({ message: "Unable to parse server response." }));
+
+      if (!response.ok) {
+        throw new Error(payload?.message || "Failed to submit the form.");
+      }
+
+      setSubmitFeedback({
+        type: "success",
+        message: "Thanks! Your message has been sent successfully.",
+      });
+      setFormData(INITIAL_FORM_DATA);
+      setErrors(INITIAL_ERRORS);
+    } catch (error) {
+      setSubmitFeedback({
+        type: "error",
+        message:
+          error?.message || "Something went wrong. Please try again later.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -82,6 +245,7 @@ const Contact = () => {
               <form
                 onSubmit={handleSubmit}
                 className="flex flex-col gap-5.25 w-full"
+                noValidate
               >
                 {/* Name Field */}
                 <div className="flex flex-col gap-3.25">
@@ -93,9 +257,17 @@ const Contact = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
+                    onBlur={handleBlur}
                     placeholder="e.g john"
                     className="font-jost text-[14px] leading-5 bg-transparent border-b border-[#4F4F4F] pb-1.5 text-white placeholder-[#5B5B5B] focus:outline-none focus:border-primary transition"
+                    aria-invalid={Boolean(errors.name)}
+                    aria-describedby="name-error"
                   />
+                  {errors.name && (
+                    <p id="name-error" className="text-[12px] text-[#FF6B6B]">
+                      {errors.name}
+                    </p>
+                  )}
                 </div>
 
                 {/* Email Field */}
@@ -108,9 +280,17 @@ const Contact = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
+                    onBlur={handleBlur}
                     placeholder="e.g john@gmail.com"
                     className="font-jost text-[14px] leading-5 bg-transparent border-b border-[#4F4F4F] pb-1.5 text-white placeholder-[#5B5B5B] focus:outline-none focus:border-primary transition"
+                    aria-invalid={Boolean(errors.email)}
+                    aria-describedby="email-error"
                   />
+                  {errors.email && (
+                    <p id="email-error" className="text-[12px] text-[#FF6B6B]">
+                      {errors.email}
+                    </p>
+                  )}
                 </div>
 
                 {/* Phone Number Field */}
@@ -123,9 +303,19 @@ const Contact = () => {
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    placeholder="e.g 0491 570 156"
+                    onBlur={handleBlur}
+                    placeholder="e.g +1 (138) 433-8355"
                     className="font-jost text-[14px] leading-5 bg-transparent border-b border-[#4F4F4F] pb-1.75 text-white placeholder-[#5B5B5B] focus:outline-none focus:border-primary transition"
+                    aria-invalid={Boolean(errors.phone)}
+                    aria-describedby="phone-error"
+                    inputMode="numeric"
+                    autoComplete="tel"
                   />
+                  {errors.phone && (
+                    <p id="phone-error" className="text-[12px] text-[#FF6B6B]">
+                      {errors.phone}
+                    </p>
+                  )}
                 </div>
 
                 {/* Message Field */}
@@ -137,19 +327,40 @@ const Contact = () => {
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
+                    onBlur={handleBlur}
                     placeholder="Enter your message here"
                     rows="4"
                     className="font-jost text-[14px] leading-5 bg-transparent border-b border-[#4F4F4F] pb-1.75 text-white placeholder-[#5B5B5B] focus:outline-none focus:border-primary transition resize-none"
+                    aria-invalid={Boolean(errors.message)}
+                    aria-describedby="message-error"
                   />
+                  {errors.message && (
+                    <p id="message-error" className="text-[12px] text-[#FF6B6B]">
+                      {errors.message}
+                    </p>
+                  )}
                 </div>
+
+                {submitFeedback.message && (
+                  <p
+                    className={`text-[13px] ${
+                      submitFeedback.type === "success"
+                        ? "text-[#8EE6A3]"
+                        : "text-[#FF6B6B]"
+                    }`}
+                  >
+                    {submitFeedback.message}
+                  </p>
+                )}
 
                 {/* Submit Button */}
                 <div className="flex justify-start pt-6">
                   <button
                     type="submit"
-                    className="px-10 py-3 bg-primary rounded-lg font-jost text-[16px] font-medium leading-5.75 text-white hover:opacity-90 transition"
+                    disabled={isSubmitting}
+                    className="px-10 py-3 bg-primary rounded-lg font-jost text-[16px] font-medium leading-5.75 text-white hover:opacity-90 transition disabled:cursor-not-allowed disabled:opacity-60"
                   >
-                    Submit
+                    {isSubmitting ? "Submitting..." : "Submit"}
                   </button>
                 </div>
               </form>

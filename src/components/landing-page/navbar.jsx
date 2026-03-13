@@ -100,9 +100,9 @@ const Navbar = () => {
 
         <div className="flex items-center gap-3">
           <div className="hidden lg:flex items-center gap-3">
-            <button className="px-4 py-2 bg-white rounded-lg text-sm font-medium text-black">
+            <Link href="#demo" className="px-4 py-2 bg-white rounded-lg text-sm font-medium text-black">
               Contact us
-            </button>
+            </Link>
             <button className="px-3 py-2 bg-white/5 border border-white rounded-lg text-sm text-white">
               Login
             </button>

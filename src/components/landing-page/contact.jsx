@@ -19,7 +19,19 @@ const INITIAL_ERRORS = {
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const formatPhoneNumber = (value) => {
-  const digits = value.replace(/\D/g, "").slice(0, 10);
+  let digits = value.replace(/\D/g, "");
+
+  // Ignore country code when users edit a value already formatted with +1.
+  if (value.trim().startsWith("+1") && digits.startsWith("1")) {
+    digits = digits.slice(1);
+  }
+
+  // Also support pasted 11-digit US numbers like 11234567890.
+  if (digits.length > 10 && digits.startsWith("1")) {
+    digits = digits.slice(1);
+  }
+
+  digits = digits.slice(0, 10);
 
   if (!digits) {
     return "";

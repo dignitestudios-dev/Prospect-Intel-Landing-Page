@@ -159,7 +159,7 @@ const Contact = () => {
 
     try {
       const response = await fetch(
-        "https://dev.api.prospectintelhq.com/api/contact",
+        "https://staging.api.prospectintelhq.com/api/contact",
         {
           method: "POST",
           headers: {

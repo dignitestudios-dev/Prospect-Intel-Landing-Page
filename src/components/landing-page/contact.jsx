@@ -18,37 +18,35 @@ const INITIAL_ERRORS = {
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-const formatPhoneNumber = (value) => {
-  let digits = value.replace(/\D/g, "");
+const getPhoneDigits = (value) => value.replace(/\D/g, "");
 
-  // Ignore country code when users edit a value already formatted with +1.
-  if (value.trim().startsWith("+1") && digits.startsWith("1")) {
-    digits = digits.slice(1);
-  }
-
-  // Also support pasted 11-digit US numbers like 11234567890.
+const getUsNationalDigits = (value) => {
+  const digits = getPhoneDigits(value);
   if (digits.length > 10 && digits.startsWith("1")) {
-    digits = digits.slice(1);
+    return digits.slice(1, 11);
   }
+  return digits.slice(0, 10);
+};
 
-  digits = digits.slice(0, 10);
+const formatUsPhone = (value) => {
+  const digits = getUsNationalDigits(value);
 
   if (!digits) {
     return "";
   }
 
   if (digits.length < 4) {
-    return `+1 (${digits}`;
+    return `(${digits}`;
   }
 
   if (digits.length < 7) {
-    return `+1 (${digits.slice(0, 3)}) ${digits.slice(3)}`;
+    return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
   }
 
-  return `+1 (${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(
-    6
-  )}`;
+  return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
 };
+
+
 
 const Contact = () => {
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
@@ -85,9 +83,9 @@ const Contact = () => {
         if (!trimmedValue) {
           return "Phone number is required.";
         }
-        const digitsOnly = trimmedValue.replace(/\D/g, "");
+        const digitsOnly = getPhoneDigits(trimmedValue);
         if (digitsOnly.length !== 10) {
-          return "Phone number must be 10 digits in +1 format.";
+          return "Phone number must be 10 digits.";
         }
         return "";
       }
@@ -121,8 +119,8 @@ const Contact = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    const nextValue =
-      name === "phone" ? formatPhoneNumber(value) : value;
+
+    const nextValue = name === "phone" ? formatUsPhone(value) : value;
 
     setFormData((prev) => ({
       ...prev,
@@ -168,7 +166,7 @@ const Contact = () => {
           body: JSON.stringify({
             name: formData.name.trim(),
             email: formData.email.trim(),
-            phone: formData.phone.trim(),
+            phone: `+1 ${formatUsPhone(formData.phone)}`,
             message: formData.message.trim(),
           }),
         }
@@ -310,19 +308,25 @@ const Contact = () => {
                   <label className="font-jost text-[14px] leading-5 text-white">
                     Phone Number
                   </label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    placeholder="e.g +1 (138) 433-8355"
-                    className="font-jost text-[14px] leading-5 bg-transparent border-b border-[#4F4F4F] pb-1.75 text-white placeholder-[#5B5B5B] focus:outline-none focus:border-primary transition"
-                    aria-invalid={Boolean(errors.phone)}
-                    aria-describedby="phone-error"
-                    inputMode="numeric"
-                    autoComplete="tel"
-                  />
+                  <div className="flex items-center border-b border-[#4F4F4F] pb-1.75 focus-within:border-primary transition">
+                    <span className="font-jost text-[14px] leading-5 text-white select-none mr-2">
+                      +1
+                    </span>
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      placeholder="e.g (138) 433-8355"
+                      className="font-jost text-[14px] leading-5 bg-transparent text-white placeholder-[#5B5B5B] focus:outline-none transition w-full"
+                      aria-invalid={Boolean(errors.phone)}
+                      aria-describedby="phone-error"
+                      inputMode="numeric"
+                      autoComplete="tel-national"
+                      maxLength={14}
+                    />
+                  </div>
                   {errors.phone && (
                     <p id="phone-error" className="text-[12px] text-[#FF6B6B]">
                       {errors.phone}
@@ -338,6 +342,7 @@ const Contact = () => {
                   <textarea
                     name="message"
                     value={formData.message}
+                    maxLength={300}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     placeholder="Enter your message here"

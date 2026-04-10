@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Message from "../icons/message";
+import Link from "next/link";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -237,9 +238,9 @@ const Contact = () => {
                 <div className="flex items-center gap-3 mt-2">
                   <Message />
                   <div>
-                    <p className="font-jost text-[14px] font-medium leading-5.75 text-white">
-                      info@prospectintel.com
-                    </p>
+                    <Link href={"mailto:info@prospectintelhq.com"} className="font-jost text-[14px] font-medium leading-5.75 text-white">
+                      info@prospectintelhq.com
+                    </Link>
                   </div>
                 </div>
               </div>

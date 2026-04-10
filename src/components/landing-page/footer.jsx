@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 const Footer = () => {
@@ -109,9 +110,9 @@ const Footer = () => {
             <h3 className="font-inter text-[20px] font-semibold leading-5.75 text-white">
               We're always happy to help.
             </h3>
-            <p className="font-axiforma text-[13px] leading-5.25 text-white">
-              info@prospectintel.com
-            </p>
+            <Link href="mailto:info@prospectintelhq.com" className="font-axiforma text-[13px] leading-5.25 text-white">
+              info@prospectintelhq.com
+            </Link>
           </div>
         </div>
       </div>

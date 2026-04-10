@@ -103,9 +103,9 @@ const Navbar = () => {
             <Link href="#demo" className="px-4 py-2 bg-white rounded-lg text-sm font-medium text-black">
               Contact us
             </Link>
-            <button className="px-3 py-2 bg-white/5 border border-white rounded-lg text-sm text-white">
+            <Link href="https://app.prospectintelhq.com/auth/login" target="_blank" className="px-3 py-2 bg-white/5 border border-white rounded-lg text-sm text-white">
               Login
-            </button>
+            </Link>
           </div>
 
           <button

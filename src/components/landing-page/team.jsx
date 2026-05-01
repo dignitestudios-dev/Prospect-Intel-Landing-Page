@@ -8,12 +8,12 @@ const Team = () => {
       description:
         "David has spent more than a decade working with major college football programs across the country, serving in leadership roles including Director of Player Personnel and Director of College Scouting. He has built and led personnel departments for nationally recognized programs such as LSU, Georgia, Florida, Texas A&M, Mississippi State, Arkansas, and Louisville.\n\nThroughout his career, David has worked alongside 147 NFL Draft selections and was a member of LSU's 2019 National Championship staff. His experience spans roster building, player evaluation, recruiting strategy, and organizational leadership at the highest levels of college football.\n\nDavid holds a bachelor's degree in Business Management from Southeastern Louisiana University.",
     },
-    {
-      name: "Dave Shumate",
-      image: "/images/dave.webp",
-      description:
-        "Dave has spent over a decade working with major college football programs across the country. He has served as Director of Player Personnel at UCF and Kansas and has led personnel staffs for programs including Texas A&M, Georgia, Auburn, Miami, and the University of Alabama where he earned his bachelor's degree in Communication Studies.\n\nThroughout his career, Dave has worked alongside 102 NFL Draft picks and brings experience from both the college and private sectors, including roles in recruiting service sales and as a Director of NIL Operations for a sports agency.",
-    },
+    // {
+    //   name: "Dave Shumate",
+    //   image: "/images/dave.webp",
+    //   description:
+    //     "Dave has spent over a decade working with major college football programs across the country. He has served as Director of Player Personnel at UCF and Kansas and has led personnel staffs for programs including Texas A&M, Georgia, Auburn, Miami, and the University of Alabama where he earned his bachelor's degree in Communication Studies.\n\nThroughout his career, Dave has worked alongside 102 NFL Draft picks and brings experience from both the college and private sectors, including roles in recruiting service sales and as a Director of NIL Operations for a sports agency.",
+    // },
   ];
 
   return (
@@ -51,7 +51,8 @@ const Team = () => {
         </div>
 
         {/* Team Members Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 w-full max-w-310 mx-auto">
+        {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 w-full max-w-310 mx-auto"> */}
+        <div className="w-full max-w-310 mx-auto">
           {teamMembers.map((member, index) => (
             <div
               key={index}
@@ -82,7 +83,7 @@ const Team = () => {
                 </h3>
 
                 <p className="font-jost text-[16px] leading-6.25 text-gray-400 text-center uppercase mb-4">
-                  Co-Founder
+                  Founder
                 </p>
 
                 {/* Description */}

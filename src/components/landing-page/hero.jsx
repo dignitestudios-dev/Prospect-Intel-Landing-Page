@@ -1,8 +1,17 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 const Hero = () => {
+
+  const handleLinkClick = (e, href) => {
+    e.preventDefault();
+    const el = document.querySelector(href);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+
   return (
     <div className="relative w-full bg-[#000E16] overflow-hidden" id="home">
       {/* Hero Background Section */}
@@ -55,8 +64,11 @@ const Hero = () => {
           {/* CTA Buttons */}
           <div className="flex flex-row gap-[14px] items-center">
             {/* Get Started Button */}
-            <button className="flex flex-row justify-center items-center px-[10px] py-[10px] gap-[10px] h-[44px] bg-white/5 border border-white rounded-lg hover:bg-white/10 transition group">
+            <button
+              onClick={(e) => handleLinkClick(e, "#demo")}
+              className="flex flex-row justify-center items-center px-[10px] py-[10px] gap-[10px] h-[44px] bg-white/5 border border-white rounded-lg hover:bg-white/10 transition group">
               <span className="text-[16px] font-jost font-medium text-white text-center">
+
                 Get Started
               </span>
               <svg
@@ -76,7 +88,9 @@ const Hero = () => {
 
             {/* Schedule a Demo Button */}
             <Link href="/#demo">
-              <button className="flex flex-row justify-center items-center px-[10px] py-[10px] gap-[10px] h-[44px] bg-primary rounded-lg hover:opacity-90 transition">
+              <button
+                onClick={(e) => handleLinkClick(e, "#demo")}
+                className="flex flex-row justify-center items-center px-[10px] py-[10px] gap-[10px] h-[44px] bg-primary rounded-lg hover:opacity-90 transition">
                 <span className="text-[16px] font-jost font-medium text-white text-center">
                   Schedule a Demo
                 </span>

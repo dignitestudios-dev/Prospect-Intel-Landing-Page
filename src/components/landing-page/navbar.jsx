@@ -36,6 +36,7 @@ const Navbar = () => {
     setMenuOpen(false);
   };
 
+
   useEffect(() => {
     const sections = navLinks
       .map((l) => document.querySelector(l.href))
@@ -59,9 +60,8 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-300 backdrop-blur-sm ${
-        isScrolled ? "bg-[#000a10e6]" : "bg-[#000a1066]"
-      }`}
+      className={`fixed top-0 w-full z-50 transition-all duration-300 backdrop-blur-sm ${isScrolled ? "bg-[#000a10e6]" : "bg-[#000a1066]"
+        }`}
     >
       <div className="flex flex-row items-center justify-between px-6 sm:px-8 md:px-16 lg:px-25 py-4">
         <div className="flex gap-10">
@@ -87,10 +87,9 @@ const Navbar = () => {
                 key={link.href}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className={`text-[20px] text-white font-bebas transition ${
-                  activeLink === link.href &&
+                className={`text-[20px] text-white font-bebas transition ${activeLink === link.href &&
                   "underline underline-offset-[6px] decoration-primary decoration-2"
-                }`}
+                  }`}
               >
                 {link.label}
               </a>
@@ -176,23 +175,25 @@ const Navbar = () => {
                   key={link.href}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  className={`text-lg py-2 px-2 rounded transition ${
-                    activeLink === link.href
-                      ? "text-primary underline decoration-primary decoration-2"
-                      : "text-white hover:bg-white/5"
-                  }`}
+                  className={`text-lg py-2 px-2 rounded transition ${activeLink === link.href
+                    ? "text-primary underline decoration-primary decoration-2"
+                    : "text-white hover:bg-white/5"
+                    }`}
                 >
                   {link.label}
                 </a>
               ))}
 
+
               <div className="mt-4">
-                <Link href="/#demo">
+                <Link href="https://app.prospectintelhq.com/auth/login" target="_blank">
                   <button className="w-full py-3 bg-primary rounded-lg text-white">
-                    Schedule a Demo
+                    Login
                   </button>
                 </Link>
               </div>
+
+
             </nav>
           </aside>
         </div>
